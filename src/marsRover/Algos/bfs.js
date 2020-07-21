@@ -49,24 +49,18 @@ function getNeighbours(grid,curr)
 
 function getShortestPath (grid, start, finish)
 {
-    const objBFS={
-        shortestPath:[],
-        pathLength:0
-    };
+    const shortestPath=[]
     if(finish.isVisited===true)
         {
             let curr=finish;
             while(curr!==start)
                 {
-                    objBFS.shortestPath.push(curr);
+                    shortestPath.push(curr);
                     curr=curr.prev;
-                    objBFS.pathLength++;
                 }
         }
-    if(objBFS.shortestPath.length>0)
-        {
-            objBFS.shortestPath.push(start);
-            objBFS.pathLength++;
-        }
-    return objBFS;
+    if(shortestPath.length>0)
+        shortestPath.push(start);
+        
+    return shortestPath;
 }

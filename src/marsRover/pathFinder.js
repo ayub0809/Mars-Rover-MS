@@ -10,6 +10,7 @@ let sr=12;
 let sc=10;
 let fr=12;
 let fc=30;
+
 export default class PathFinder extends Component
 {
     constructor()
@@ -22,7 +23,7 @@ export default class PathFinder extends Component
             changeFinish: false,
             addWeight:false,
             pathLength:0,
-            isAnimationActive:false
+            isAnimationActive:false,
         };
 
         this.animatePath=this.animatePath.bind(this);
@@ -41,7 +42,7 @@ export default class PathFinder extends Component
             }
         return grid;
     }
-    
+
     handleMouseDown(r,c)
     {
         if(this.state.isAnimationActive===false)
@@ -68,6 +69,10 @@ export default class PathFinder extends Component
 
             if(this.state.addWeight===true)
             {
+                if(node.isWall===true)
+                {
+                    node.isWall=false
+                }
                 const newNode={
                     ...node,
                     isWeighted:!node.isWeighted
@@ -77,6 +82,8 @@ export default class PathFinder extends Component
             
             else
             {
+                if(node.isWeighted===true)
+                    node.isWeighted=false;
                 const newNode={
                     ...node,
                     isWall:!node.isWall
@@ -89,11 +96,11 @@ export default class PathFinder extends Component
             });
         } 
     }
+
     
     handleMouseEnter(r,c)
     {
-        if(this.state.mouse===false)
-            return;
+        
         const newGrid=this.state.grid.slice();
         const node=newGrid[r][c];
         if(node.isStart||node.isFinish)
@@ -114,23 +121,33 @@ export default class PathFinder extends Component
                 fr=r;
                 fc=c;
             }
-        else if(this.state.addWeight===true)
-        {
-            const newNode={
-                ...node,
-                isWeighted:!node.isWeighted,
+
+            else if(this.state.mouse===true)
+            {
+                if(this.state.addWeight===true)
+                    {
+                        if(node.isWall===true)
+                        {
+                            node.isWall=false;
+                        }
+                        const newNode={
+                            ...node,
+                            isWeighted:!node.isWeighted,
+                        }
+                        newGrid[r][c]=newNode;
+                    }
+                    else
+                    {
+                        if(node.isWeighted===true)
+                            node.isWeighted=false;
+                        const newNode={
+                            ...node,
+                            isWall: !node.isWall
+                        }
+                        newGrid[r][c]=newNode;
+                    }
             }
-            newGrid[r][c]=newNode;
-        }
-        else 
-        {
-            const newNode={
-                ...node,
-                isWall: !node.isWall
-            }
-            newGrid[r][c]=newNode;
-        }
-        
+          
         this.setState({grid:newGrid});
     }
     
@@ -145,6 +162,7 @@ export default class PathFinder extends Component
     
     toggleW()
     {
+        
         this.setState({
             addWeight: !(this.state.addWeight)
         })
@@ -165,7 +183,7 @@ export default class PathFinder extends Component
         })
     }
     
-    animateVisited(order, path, start, finsh)
+    animateVisited(order, path, start, finish)
     {
         for (let i=1; i<order.length; i++)
             {
@@ -182,74 +200,54 @@ export default class PathFinder extends Component
                 }, 10*i);
             }
     }
-    
-    visualiseBFS()
+
+    activateBFS()
     {
-        this.setState({
-            isAnimationActive:true
-        })
-        const grid=this.state.grid.slice();
+        const grid=this.state.grid.map(a=>a.map(b=>Object.assign({},b)));
         const start=grid[sr][sc];
         const finish=grid[fr][fc];
         const order=bfs(grid, start, finish);
-        const objBFS= getShortestPath(grid, start, finish);
-        const path=objBFS.shortestPath;
-        this.animateVisited(order, path, start, finish);
-        this.setState({
-            pathLength:objBFS.pathLength,
-        })
+        const path= getShortestPath(grid, start, finish);
+        this.visualise(order, path, start, finish);
     }
     
-    visualiseDFS()
+    activateDFS()
     {
-        this.setState({
-            isAnimationActive:true
-        })
-        const grid=this.state.grid.slice();
+        const grid=this.state.grid.map(a=>a.map(b=>Object.assign({},b)));
         const start=grid[sr][sc];
         const finish=grid[fr][fc];
         const temp=dfs(grid, start, finish);
         const order= temp.order;
-        const objDFS= getPathDFS(grid, start, finish);
-        const path=objDFS.path;
-        this.animateVisited(order, path, start, finish);
-        this.setState({
-            pathLength:objDFS.pathLength,
-        });
+        const path= getPathDFS(grid, start, finish);
+        this.visualise(order, path, start, finish);
     }
     
-    visualiseAStar()
+    activateAStar()
     {
-        this.setState({
-            isAnimationActive:true
-        })
-        const grid=this.state.grid.slice();
+        const grid=this.state.grid.map(a=>a.map(b=>Object.assign({},b)));
         const start=grid[sr][sc];
         const finish=grid[fr][fc];
         const order= aStar(grid, start, finish);
-        const objAStar=getPathAStar(grid, start, finish);
-        const path=objAStar.path;
-        this.animateVisited(order, path, start, finish);
-        this.setState({
-            pathLength:objAStar.pathLength,
-        })
+        const path=getPathAStar(grid, start, finish);
+        this.visualise(order, path, start, finish);
     }
 
-    visualiseDijkstra()
+    activateDijkstra()
     {
-        this.setState({
-            isAnimationActive:true
-        })
-        const grid=this.state.grid.slice();
+        const grid=this.state.grid.map(a=>a.map(b=>Object.assign({},b)));
         const start=grid[sr][sc];
         const finish=grid[fr][fc];
         const order= dijkstra(grid, start, finish);
-        const objDijkstra= getPathDijkstra(finish);
-        const path=objDijkstra.path;
-        this.animateVisited(order, path, start, finish);
+        const path= getPathDijkstra(finish);
+        this.visualise(order, path, start, finish);
+    }
+
+    visualise()
+    {
+        /*this.animateVisited(order, path, finish, start);
         this.setState({
-            pathLength:objDijkstra.pathLength,
-        })
+            isAnimationActive:true
+        })*/
     }
 
     resetGrid()
@@ -289,84 +287,93 @@ export default class PathFinder extends Component
         
     }
     
-    render (){
+    render ()
+    {
         const grid = this.state.grid;
         return(
-            <div>
-                <div class="row">
-                    <h1>Mars Curiosity Rover</h1>
+                <div>
+                    <div class="row ">
+                        <h1>Mars Curiosity Rover</h1>
 
-                </div>
-                <div className="row">
-                    <div class="col span-1-of-4">
-                        <button 
-                        onClick = {() => this.visualiseBFS() }>
-                        BFS
-                        </button>
-                        <button 
-                            onClick = {() => this.visualiseDFS() }>
-                            DFS
-                        </button>
-                        <button
-                            onClick={()=>this.visualiseAStar()}>
-                            AStar
-                        </button>
-                        <button
-                            onClick={()=>this.visualiseDijkstra()}>
-                            Dijkstra
-                        </button>
-                        <button
-                            onClick = {() => this.resetGrid()}
-                        >
-                            Reset
-                        </button>
-                        <button
-                        onClick={()=>this.toggleW()}>
-                            Weight/Wall
-                        </button>
-                        <button
-                        onClick={()=>this.resetPath()}>
-                            Reset Path
-                        </button>
-                        <div className="pathLength">
-                            Path length: {this.state.pathLength}
-                        </div>
                     </div>
-            
-                <div className = "grid col span-3-of-4">
-                    {grid.map((row, rowInd) =>{
-                        return(
-                            <div key = {rowInd} >
-                                {row.map((node, ind)=>{
-                                    const {val, row, col, isStart, isFinish, isWall,isWeighted, isVisited, inPath} = node;
-                                    return(
-                                        <Node
-                                            key = {val}
-                                            num = {val}
-                                            row = {row}
-                                            col = {col}
-                                            isFinish = {isFinish}
-                                            isStart = {isStart}
-                                            isWall = {isWall}
-                                            isVisited = {isVisited}
-                                            isWeighted={isWeighted}
-                                            onMouseDown = {(r,c)=> this.handleMouseDown(r, c)}
-                                            onMouseUp = {(r,c) => this.handleMouseUp(r, c)}
-                                            onMouseEnter = {(r,c) => this.handleMouseEnter(r, c)}
-                                        />
-                                    );
-                                        
-                                })}
+                    <div className="row ">
+                        <div class="col span-1-of-4 nav-bar">
+                            <div className="Algorithms">
+                                <h2>Algorithms</h2>
+                                <div className="button BFS"
+                                onClick = {() => this.activateBFS() }>
+                                BFS
+                                </div>
+                                <div className="button DFS"
+                                    onClick = {() => this.activateDFS() }>
+                                    DFS
+                                </div>
+                                <div className="button AStar"
+                                    onClick={()=>this.activateAStar()}>
+                                    AStar
+                                </div>
+                                <div className="button Dijkstra"
+                                    onClick={()=>this.activateDijkstra()}>
+                                    Dijkstra
+                                </div>
                             </div>
-                        );
-                    })}
+                            
+                            <div className="button Reset"
+                                onClick = {() => this.resetGrid()}>
+                                Reset
+                            </div>
+                            <div className="button weight-wall"
+                                onClick={()=>this.toggleW()}>
+                                Weight/Wall
+                            </div>
+                            <div className="button ResetPath"
+                            onClick={()=>this.resetPath()}>
+                                Reset Path
+                            </div>
+                            <div className="button visualise"
+                                onClick={()=>this.visualise()}>
+                                visualise
+                            </div>
+                            <div className="pathLength">
+                                Path length: {this.state.pathLength}
+                            </div>
+                        </div>
+                
+                    <div className = "grid col span-3-of-4">
+                        {grid.map((row, rowInd) =>{
+                            return(
+                                <div key = {rowInd} >
+                                    {row.map((node, ind)=>{
+                                        const {val, row, col, isStart, isFinish, isWall,isWeighted, isVisited, inPath} = node;
+                                        return(
+                                            <Node
+                                                key = {val}
+                                                num = {val}
+                                                row = {row}
+                                                col = {col}
+                                                isFinish = {isFinish}
+                                                isStart = {isStart}
+                                                isWall = {isWall}
+                                                isVisited = {isVisited}
+                                                isWeighted={isWeighted}
+                                                onMouseDown = {(r,c)=> this.handleMouseDown(r, c)}
+                                                onMouseUp = {(r,c) => this.handleMouseUp(r, c)}
+                                                onMouseEnter = {(r,c) => this.handleMouseEnter(r, c)}
+                                            />
+                                        );
+                                            
+                                    })}
+                                </div>
+                            );
+                        })}
+                    </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-        );
-    }
+            );
+        }
+
 }
- 
+
 const newNode= (row,col)=>{
     return {
         val: 50*row+col,
@@ -383,4 +390,3 @@ const newNode= (row,col)=>{
         distance:Infinity
     };
 }
- 

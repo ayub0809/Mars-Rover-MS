@@ -62,16 +62,12 @@ function getAllNodes(grid)
 
 export function getPathDijkstra(finish)
 {
-    const objDijkstra={
-        path:[],
-        pathLength:0
-    };
+    const path=[]
     let current=finish;
     while(current!==null)
     {
-        objDijkstra.path.unshift(current);
+        path.unshift(current);
         current=current.prev;
-        objDijkstra.pathLength++;
     }
-    return objDijkstra;
+    return path;
 }

@@ -73,20 +73,16 @@ export function aStar(grid, start, finish)
 
 export function getPathAStar(grid, start, finish)
 {
-    const objAStar={
-        path:[],
-        pathLength:0
-    };
+    const path=[];
     if(finish.isVisited===true)
     {
         let curr= finish;
         while(curr!==null)
         {
-            objAStar.push(curr);
+            path.push(curr);
             curr=curr.prev;
-            objAStar.pathLength++;
         }
     }
 
-    return objAStar;
+    return path;
 }

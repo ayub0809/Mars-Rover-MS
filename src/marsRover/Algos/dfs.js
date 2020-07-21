@@ -67,19 +67,15 @@ export function dfs(grid, start, finish)
 
 export function getPathDFS (grid,start,finish)
 {
-    const objDFS={
-        path:[],
-        pathLength:0
-    };
+    const path=[]
     if(finish.isVisited)
         {
             let curr=finish;
             while(curr!=null)
                 {
-                    objDFS.path.push(curr);
+                    path.push(curr);
                     curr=curr.prev;
-                    objDFS.pathLength++;
                 }
         }
-    return objDFS;
+    return path;
 }
