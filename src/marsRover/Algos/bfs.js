@@ -1,6 +1,6 @@
 
-export {bfs, getShortestPath};
-function bfs(grid, start, finish) 
+
+export function bfs(grid, start, finish) 
 {
     const queue=[];
     const order=[];
@@ -45,22 +45,4 @@ function getNeighbours(grid,curr)
         if((grid[r+1][c].isVisited===false)&&(grid[r+1][c].isWall===false))
             n.push(grid[r+1][c]);
     return n;
-}
-
-function getShortestPath (grid, start, finish)
-{
-    const shortestPath=[]
-    if(finish.isVisited===true)
-        {
-            let curr=finish;
-            while(curr!==start)
-                {
-                    shortestPath.push(curr);
-                    curr=curr.prev;
-                }
-        }
-    if(shortestPath.length>0)
-        shortestPath.push(start);
-        
-    return shortestPath;
 }

@@ -60,14 +60,17 @@ function getAllNodes(grid)
     return nodes;
 }
 
-export function getPathDijkstra(finish)
+export function distanceDijkstra(grid, start, finish)
 {
-    const path=[]
-    let current=finish;
-    while(current!==null)
+    dijkstra(grid,start, finish);
+    let curr=finish;
+    let dist=0;
+    if(curr.isVisited===false)
+    return Infinity;
+    while(curr!==null)
     {
-        path.unshift(current);
-        current=current.prev;
+        dist++;
+        curr=curr.prev;
     }
-    return path;
+    return dist;
 }

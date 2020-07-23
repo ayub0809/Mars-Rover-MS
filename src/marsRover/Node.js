@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import "./css-project/Node.css"
-import IosDisc from 'react-ionicons/lib/IosDisc'
+import IosLeaf from 'react-ionicons/lib/IosLeafOutline'
 import IosRadioOutline from 'react-ionicons/lib/IosRadioOutline'
 import IosIonitron from 'react-ionicons/lib/IosIonitron'
+import IosLock from 'react-ionicons/lib/IosLock'
 import "./css-resources/normalize.css"
 import "./css-resources/grid.css"
 
@@ -21,14 +22,15 @@ export default class Node extends Component
             onMouseUp,
             isVisited,
             isWall,
-            inPath,
-            isWeighted
+            isWeighted,
+            isPlant
         }= this.props;
         
         const extraClass=isFinish ? "isFinish":
         isStart? "isStart":
         isWall? "isWall": 
-        isWeighted? "isWeighted": "";
+        isWeighted? "isWeighted": 
+        isPlant?"isPlant":"";
  
         if(isWeighted)
         return(
@@ -38,7 +40,7 @@ export default class Node extends Component
             onMouseUp= {()=> onMouseUp(row,col)}
             onMouseEnter = {()=> onMouseEnter(row,col)}
            >
-               <IosDisc/>
+               <IosLock color="#fff1da"/>
            </div>
         );
         else if (isStart)
@@ -61,6 +63,17 @@ export default class Node extends Component
              onMouseEnter = {()=> onMouseEnter(row,col)}
             >
                 <IosRadioOutline/>
+            </div>
+         );
+         else if (isPlant)
+         return(
+            <div id={`node-${row}-${col}`}
+             className={`node ${extraClass}`}
+             onMouseDown = {()=>onMouseDown(row,col)}
+             onMouseUp= {()=> onMouseUp(row,col)}
+             onMouseEnter = {()=> onMouseEnter(row,col)}
+            >
+                <IosLeaf/>
             </div>
          );
          else

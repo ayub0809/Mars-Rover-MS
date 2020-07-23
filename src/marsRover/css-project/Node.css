@@ -1,5 +1,7 @@
 
+/**************************************/
 /**ABSOLUTE POSITIONING**/
+/**************************************/
 *
 {
   margin:0;
@@ -13,23 +15,37 @@ html
   text-rendering:optimizeLegibility;
   font-size:18px;
   font-weight: 300;
-  font-family:sans-serif;
 }
 
-
-/**ABSOLUTE POSITIONING**/
 .row
 {
     max-width: 1350px;
-    margin: 0;
+    margin: 20px;
     padding:0;
 }
 
+.clearfix
+{
+    zoom:1
+}
+
+.clearfix:after
+{
+    content: '.';
+    clear:both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+/**************************************/
+/****GRID COMPONENTS******/
+/**************************************/
 .node
 {
     height: 25px;
     width:2.5%;
-    border: 1px solid white;
+    border: 1px solid white ;
     background-color:  #b44c46;
     display:inline-block;
     vertical-align:middle;
@@ -38,159 +54,266 @@ html
     font-size: 5px; 
 }
 
-.nav-bar
-{
-  background-color: rgba(204, 204, 204, 0.452);
-  border-radius: 8px;
-  
-}
-
-h1
-{
-  color: azure;
-  font-weight: 200;
-}
-
-
-.isFinish
-{
-    background-color:white;
-}
-
 .isStart
 {
-    background-color: white;
+    background-color: rgb(238, 209, 215);
 }
 
 .isWall
 {
-    background-color: rgb(143, 139, 139);
+  background-color:rgb(71, 67, 67);
+  border-color:rgb(109, 94, 94);
 }
 
 .isWeighted
 {
-  background-color: white;
+  background-color:rgb(71, 67, 67);
+  border-color:rgb(109, 94, 94);
+}
+
+.isFinish
+{
+    background-color:rgb(238, 209, 215);
+}
+
+.isPlant
+{
+  background-color: rgb(238, 209, 215);
+}
+
+/**************************************/
+/****SINGLE COMPONENTS******/
+/**************************************/
+
+img
+{
+  float:left;
+  width:9%;
+  height:auto;
+  margin:10px 20px;
+  transform:scale(1);
+  transition: transform 0.2s
+}
+
+img:hover
+{
+  transform:scale(1.07);
+}
+
+a
+{
+  text-decoration: none;
+}
+
+.info-message
+{
+  color: rgb(223, 240, 240);
+  font-size: 30px;
+  font-weight: 300;
+  margin-top:-15px;
+  margin-bottom:20px;
+}
+
+
+.algo-nav h2
+{
+  width:55%;
+  font-weight: 370;
+  text-align: center;
+  padding-bottom:4px;
+  border-bottom: 1px solid black;
+  margin-bottom:10px;
+  margin:0 auto 5px auto;
 }
 
 .pathLength
 {
-  background-color: beige;
+  display:block;
+  width:80%;
+  height:60px;
+  margin:40px 30px 30px 40px ;
+  font-size:20px;
+  padding:20px;
+  text-align:center;
+  background-color: burlywood;
+  color:black;
+  font-weight:450;
+  border-radius:12px;
 }
 
-.node-visited
+/**************************************/
+/****BUTTONS******/
+/**************************************/
+
+.button-top:link,
+.button-top:visited
 {
-    -webkit-animation-name: visitedAnimation;
-            animation-name: visitedAnimation;
-    -webkit-animation-duration: 1.5s;
-            animation-duration: 1.5s;
-     -webkit-animation-timing-function: ease-out;
-             animation-timing-function: ease-out;
-    -webkit-animation-delay: 0;
-            animation-delay: 0;
-    -webkit-animation-direction: alternate;
-            animation-direction: alternate;
-    -webkit-animation-iteration-count: 1;
-            animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;
-    -webkit-animation-play-state: running;
-            animation-play-state: running;
-  }
-  
-  @-webkit-keyframes visitedAnimation {
-     0% {
-      transform: scale(0.3);
-      background-color: rgba(0, 0, 66, 0.75);
-      border-radius: 100%;
-    } 
-  
-     50% {
-      background-color: rgba(17, 104, 217, 0.75);
-    }
-  
-    75% {
-      transform: scale(1.2);
-      background-color: rgba(0, 217, 159, 0.75);
-    } 
-  
-    100% {
-      transform: scale(1);
-      background-color: rgba(0, 190, 218, 0.75);
-    }
-  }
-  
-  @keyframes visitedAnimation {
-     0% {
-      transform: scale(0.3);
-      background-color: rgba(0, 0, 66, 0.75);
-      border-radius: 100%;
-    } 
-  
-     50% {
-      background-color: rgba(17, 104, 217, 0.75);
-    }
-  
-    75% {
-      transform: scale(1.2);
-      background-color: rgba(0, 217, 159, 0.75);
-    } 
-  
-    100% {
-      transform: scale(1);
-      background-color: rgba(0, 190, 218, 0.75);
-    }
+  display:inline-block;
+  border: 1px solid white;
+  margin-left:20px;
+  color:white;
+  height:43px;
+  width:150px;
+  padding:10px;
+  text-align:center;
+  border-radius:13px;
+  font-weight:400;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.button-top:hover,
+.button-top:active
+{
+  background-color:white;
+  color: #232d38;
+}
+
+.button-visualise:link,
+.button-visualise:visited
+{
+  display:inline-block;
+  border: 1px solid white;
+  margin-top:30px;
+  margin-left:20px;
+  color:white;
+  height:55px;
+  width:250px;
+  padding:15px;
+  text-align:center;
+  border-radius:13px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  font-weight:400;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.button-visualise:hover,
+.button-visualise:active
+{
+  background-color:white;
+  color: #232d38;
+}
+
+.button-algo:link,
+.button-algo:visited
+{
+  display: block;
+  width:80%;
+  display:inline-block;
+  height: 30px;
+  box-shadow: none;
+  margin-top:10px;
+  transition: font-size 0.2s, font-weight 0.2s;
+  color:rgb(87, 84, 84);
+  font-weight:300;
+}
+
+.button-algo:hover,
+.button-algo:active
+{
+  font-size:21px;
+  font-weight:400;
+}
+
+.cross-button
+{
+  display:inline-block;
+  border: 1px solid white;
+  margin-left:20px;
+  color:white;
+  height:43px;
+  width:150px;
+  padding:10px;
+  text-align:center;
+  border-radius:13px;
+  font-weight:400;
+  text-decoration: line-through;
+}
+/**************************************/
+/****NAVIGATION******/
+/**************************************/
+.algo-nav
+{
+  background-color: beige;
+  border-radius: 8px; 
+  padding:15px; 
+}
+
+.top-nav
+{
+  float:right;
+  margin-right:20px;
+  margin-top:20px;
+}
+
+.algo-nav a
+{
+  display:block;
+}
+
+/**************************************/
+/****ANIMATION******/
+/**************************************/
+
+.node-visited {
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+   0% {
+    transform: scale(0.3);
+    background-color: rgba(0, 0, 66, 0.75);
+    border-radius: 100%;
+  } 
+
+   50% {
+    background-color: rgba(17, 104, 217, 0.75);
   }
 
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(0, 217, 159, 0.75);
+  } 
 
-  .node-shortest-path {
-    -webkit-animation-name: shortestPath;
-            animation-name: shortestPath;
-    -webkit-animation-duration: 1.5s;
-            animation-duration: 1.5s;
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
-    -webkit-animation-delay: 0;
-            animation-delay: 0;
-    -webkit-animation-direction: alternate;
-            animation-direction: alternate;
-    -webkit-animation-iteration-count: 1;
-            animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;
-    -webkit-animation-play-state: running;
-            animation-play-state: running;
+  100% {
+    transform: scale(1);
+    background-color: rgba(28, 99, 110, 0.75);
+    border-color:rgba(87, 138, 146, 0.75);
   }
-  
-  @-webkit-keyframes shortestPath {
-    0% {
-      transform: scale(0.6);
-      background-color: rgb(255, 254, 106);
-    }
-  
-    50% {
-      transform: scale(1.2);
-      background-color: rgb(255, 254, 106);
-    }
-  
-    100% {
-      transform: scale(1);
-      background-color: pink;
-    }
+}
+
+
+.node-shortest-path {
+  animation-name: shortestPath;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes shortestPath {
+  0% {
+    transform: scale(0.6);
+    background-color:  #b86662;
   }
-  
-  @keyframes shortestPath {
-    0% {
-      transform: scale(0.6);
-      background-color: rgb(255, 254, 106);
-    }
-  
-    50% {
-      transform: scale(1.2);
-      background-color: rgb(255, 254, 106);
-    }
-  
-    100% {
-      transform: scale(1);
-      background-color: pink;
-    }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #a16966;
   }
+
+  100% {
+    transform: scale(1);
+    background-color: rgb(238, 209, 215) ;
+  }
+}
