@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/npm/ayub0809.github.io/Mars-Rover-MS/precache-manifest.25802404dd3504613826f8687d8595cf.js"
+  "/ayub0809.github.io/Mars-Rover-MS/precache-manifest.585d1dc293b0a22fd9c4d78369125a49.js"
 );
 
 self.addEventListener('message', (event) => {
@@ -33,7 +33,7 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/npm/ayub0809.github.io/Mars-Rover-MS/index.html"), {
+workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/ayub0809.github.io/Mars-Rover-MS/index.html"), {
   
   blacklist: [/^\/_/,/\/[^/?]+\.[^/]+$/],
 });
