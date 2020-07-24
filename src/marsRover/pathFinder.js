@@ -135,8 +135,8 @@ export default class PathFinder extends Component
             {
                 newGrid[sr][sc].isStart=false;
                 node.isStart=true;
-                //node.isWall=false;
-                //node.isWeighted=false;
+                node.isWall=false;
+                node.isWeighted=false;
                 sr=r;
                 sc=c;
             }
@@ -144,8 +144,8 @@ export default class PathFinder extends Component
             {
                 newGrid[fr2][fc2].isPlant=false;
                 node.isPlant=true;
-                //node.isWall=false;
-                //node.isWeighted=false;
+                node.isWall=false;
+                node.isWeighted=false;
                 fr2=r;
                 fc2=c;
             }
@@ -153,8 +153,8 @@ export default class PathFinder extends Component
             {
                 newGrid[fr][fc].isFinish=false;
                 node.isFinish=true;
-                //node.isWall=false;
-                //node.isWeighted=false;
+                node.isWall=false;
+                node.isWeighted=false;
                 fr=r;
                 fc=c;
             }
@@ -368,7 +368,7 @@ export default class PathFinder extends Component
         else if(algo === 'A*')
             order = aStar(grid, start, finish);
         const path  = getPath(grid, finish);
-        this.animateVisited(order, path);
+        this.animateVisited(order);
         setTimeout(() =>{
             this.animatePath(path);
         }, 10*order.length);
@@ -469,6 +469,7 @@ export default class PathFinder extends Component
             sc=10;
             fr=12;
             fc=30;
+            cross_button="";
             const grid=this.setGrid();
             this.setState({
                 grid:grid,
@@ -490,6 +491,7 @@ export default class PathFinder extends Component
 
     resetPath()
     {
+        cross_button="";
         if(this.state.isAnimationActive===false)
         {
             this.setState({
