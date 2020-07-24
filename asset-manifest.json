@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/ayub0809.github.io/Mars-Rover-MS/static/css/main.59b2fd79.chunk.css",
-    "main.js": "/ayub0809.github.io/Mars-Rover-MS/static/js/main.67dc9ce0.chunk.js",
-    "main.js.map": "/ayub0809.github.io/Mars-Rover-MS/static/js/main.67dc9ce0.chunk.js.map",
-    "runtime-main.js": "/ayub0809.github.io/Mars-Rover-MS/static/js/runtime-main.e434a514.js",
-    "runtime-main.js.map": "/ayub0809.github.io/Mars-Rover-MS/static/js/runtime-main.e434a514.js.map",
-    "static/js/2.26babc94.chunk.js": "/ayub0809.github.io/Mars-Rover-MS/static/js/2.26babc94.chunk.js",
-    "static/js/2.26babc94.chunk.js.map": "/ayub0809.github.io/Mars-Rover-MS/static/js/2.26babc94.chunk.js.map",
-    "index.html": "/ayub0809.github.io/Mars-Rover-MS/index.html",
-    "precache-manifest.585d1dc293b0a22fd9c4d78369125a49.js": "/ayub0809.github.io/Mars-Rover-MS/precache-manifest.585d1dc293b0a22fd9c4d78369125a49.js",
-    "service-worker.js": "/ayub0809.github.io/Mars-Rover-MS/service-worker.js",
-    "static/css/main.59b2fd79.chunk.css.map": "/ayub0809.github.io/Mars-Rover-MS/static/css/main.59b2fd79.chunk.css.map",
-    "static/js/2.26babc94.chunk.js.LICENSE.txt": "/ayub0809.github.io/Mars-Rover-MS/static/js/2.26babc94.chunk.js.LICENSE.txt",
-    "static/media/mars_rover.png": "/ayub0809.github.io/Mars-Rover-MS/static/media/mars_rover.dc205653.png"
+    "main.css": "/Mars-Rover-MS/static/css/main.59b2fd79.chunk.css",
+    "main.js": "/Mars-Rover-MS/static/js/main.5657336e.chunk.js",
+    "main.js.map": "/Mars-Rover-MS/static/js/main.5657336e.chunk.js.map",
+    "runtime-main.js": "/Mars-Rover-MS/static/js/runtime-main.dad6a298.js",
+    "runtime-main.js.map": "/Mars-Rover-MS/static/js/runtime-main.dad6a298.js.map",
+    "static/js/2.940c133c.chunk.js": "/Mars-Rover-MS/static/js/2.940c133c.chunk.js",
+    "static/js/2.940c133c.chunk.js.map": "/Mars-Rover-MS/static/js/2.940c133c.chunk.js.map",
+    "index.html": "/Mars-Rover-MS/index.html",
+    "precache-manifest.3c476b0123790f1ef9b6ac2b20be64a4.js": "/Mars-Rover-MS/precache-manifest.3c476b0123790f1ef9b6ac2b20be64a4.js",
+    "service-worker.js": "/Mars-Rover-MS/service-worker.js",
+    "static/css/main.59b2fd79.chunk.css.map": "/Mars-Rover-MS/static/css/main.59b2fd79.chunk.css.map",
+    "static/js/2.940c133c.chunk.js.LICENSE.txt": "/Mars-Rover-MS/static/js/2.940c133c.chunk.js.LICENSE.txt",
+    "static/media/mars_rover.png": "/Mars-Rover-MS/static/media/mars_rover.dc205653.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.e434a514.js",
-    "static/js/2.26babc94.chunk.js",
+    "static/js/runtime-main.dad6a298.js",
+    "static/js/2.940c133c.chunk.js",
     "static/css/main.59b2fd79.chunk.css",
-    "static/js/main.67dc9ce0.chunk.js"
+    "static/js/main.5657336e.chunk.js"
   ]
 }
