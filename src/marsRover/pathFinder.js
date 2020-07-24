@@ -39,7 +39,7 @@ export default class PathFinder extends Component
             isPlantPresent:false,
             infoMessage:"Welcome to the Mars Curiosity Rover!",
             weightMessage:"Add Weights",
-            
+            isAnimationPresent:false,
         };
 
         this.animatePath=this.animatePath.bind(this);
@@ -139,6 +139,16 @@ export default class PathFinder extends Component
                 node.isWeighted=false;
                 sr=r;
                 sc=c;
+                 if(this.state.isAnimationPresent===true)
+                {
+                    this.setState({
+                        grid:newGrid
+                    }, () =>{
+                        this.visualiseMovingPath();
+                    });
+                    return;
+                }
+
             }
         else if (this.state.changePlant===true)
             {
@@ -148,6 +158,15 @@ export default class PathFinder extends Component
                 node.isWeighted=false;
                 fr2=r;
                 fc2=c;
+                if(this.state.isAnimationPresent===true)
+                {
+                    this.setState({
+                        grid:newGrid
+                    }, () =>{
+                        this.visualiseMovingPath();
+                    });
+                    return;
+                }
             }
         else if(this.state.changeFinish===true)
             {
@@ -157,6 +176,15 @@ export default class PathFinder extends Component
                 node.isWeighted=false;
                 fr=r;
                 fc=c;
+                if(this.state.isAnimationPresent===true)
+                {
+                    this.setState({
+                        grid:newGrid
+                    }, () =>{
+                        this.visualiseMovingPath();
+                    });
+                    return;
+                }
             }
         else if(this.state.addWeight===true)
             {
@@ -235,6 +263,7 @@ export default class PathFinder extends Component
                 PlantMessage:"Remove Plant"
             })
         }
+        this.resetGrid();
         this.setState({
             isPlantPresent: !this.state.isPlantPresent,
             grid: this.setGrid()
@@ -257,6 +286,32 @@ export default class PathFinder extends Component
 
     animatePath(path, additional=0, lastAnimation=true)
     {
+          if(this.state.isAnimationPresent===true)
+        {
+            path.reverse();
+            let weightedLength=0;
+            for(let i=0;i<path.length;i++)
+                {
+                    const node=path[i];
+                    if(node.isStart||node.isFinish||node.isPlant)
+                        continue;
+                    if(node.isWeighted)
+                    weightedLength+=4;
+                    // eslint-disable-next-line no-loop-func
+                    document.getElementById(`node-${node.row}-${node.col}`).classList.add("node-shortest-path");
+                    
+                    this.setState({
+                        pathLength: i+additional + weightedLength,
+                    });
+                }  
+                if(lastAnimation===true)
+                this.setState({
+                    isAnimationActive:false,
+                    isAnimationPresent:true,
+                });
+            return;
+        }
+
         path.reverse();
         let weightedLength=0;
         for(let i=1;i<path.length-1;i++)
@@ -272,6 +327,7 @@ export default class PathFinder extends Component
                     'node node-shortest-path';
                     this.setState({
                         pathLength: i+additional + weightedLength,
+                        isAnimationPresent :true
                     });
                 }, 50 * i);
             }
@@ -279,12 +335,25 @@ export default class PathFinder extends Component
             setTimeout(()=>{
                 this.setState({
                     isAnimationActive:false,
+                    isAnimationPresent:true,
                 })
             }, 50*(path.length+additional))
     }
     
     animateVisited(order, additional=0)
     {
+        if(this.state.isAnimationPresent===true)
+        {
+            for(let i = 0; i< order.length; i++)
+            {
+                const node = order[i];
+                if(node.isStart||node.isFinish||node.isPlant)
+                continue;
+                document.getElementById(`node-${node.row}-${node.col}`).classList.add("node-visited");
+            }
+            return;
+        }
+
         for(let i = 1; i< order.length-1; i++)
         {  
             const node = order[i];
@@ -334,7 +403,7 @@ export default class PathFinder extends Component
             });
         }
         
-        if(algo==='A*')
+        else if(algo==='A*')
         this.setState({
             infoMessage:"A* Search is weighted and guarantees the shortest path!"
         });
@@ -380,6 +449,7 @@ export default class PathFinder extends Component
     {
         if(this.state.isAnimationActive===true)
         return;
+        if(this.state.isAnimationPresent===false)
         this.setState({
             isAnimationActive:true,
         })
@@ -451,6 +521,19 @@ export default class PathFinder extends Component
             path1 = getPath(grid1, grid1[fr2][fc2]);
             path2 = getPath(grid2, grid2[fr][fc]);
         }
+        if(this.state.isAnimationPresent===true)
+        {
+            for (let i=0;i<25;i++)
+            {
+                for( let j=0;j<40;j++)
+                document.getElementById(`node-${i}-${j}`).classList.remove("node-shortest-path", "node-visited")
+            }
+            this.animateVisited(order1);
+            this.animateVisited(order2);
+            this.animatePath(path1, 0, false);
+            this.animatePath(path2, path1.length);
+            return;
+        }
         this.animateVisited(order1);
         this.animateVisited(order2, order1.length);
         setTimeout(() =>{
@@ -460,6 +543,37 @@ export default class PathFinder extends Component
             this.animatePath(path2, path1.length);
         }, 10*(order1.length+order2.length) + 50*(path1.length) );
     }
+
+     visualiseMovingPath()
+    {
+        if(this.state.isPlantPresent===true)
+        {
+            this.visualiseTwoDest();
+            return;
+        }
+        const grid = this.state.grid.map(a => a.map(b => Object.assign({}, b)));
+        const start = grid[sr][sc];
+        const finish = grid[fr][fc];
+        let order = [];
+        const algo = this.state.whichAlgo;
+        if(algo === 'BFS')
+            order = bfs(grid, start, finish);
+        else if(algo === 'DFS')
+            order = dfs(grid, start, finish);
+        else if(algo === 'Dijkstra')
+            order = dijkstra(grid, start, finish);
+        else if(algo === 'A*')
+            order = aStar(grid, start, finish);
+        const path  = getPath(grid, finish);
+        for (let i=0;i<25;i++)
+        {
+            for( let j=0;j<40;j++)
+            document.getElementById(`node-${i}-${j}`).classList.remove("node-shortest-path", "node-visited")
+        }
+        this.animateVisited(order);
+        this.animatePath(path);
+    }
+
 
     resetGrid()
     {
@@ -477,7 +591,7 @@ export default class PathFinder extends Component
                 visualiseMessage:"Select Algorithm",
                 whichAlgo:null,
                 infoMessage:"Welcome to the Mars Curiosity Rover!",
-                //isAnimationPresent:false
+                isAnimationPresent:false
             });
 
             for (let i=0;i<25;i++)
@@ -499,6 +613,8 @@ export default class PathFinder extends Component
                 visualiseMessage:"Select Algorithm",
                 whichAlgo:null,
                 infoMessage:"Welcome to the Mars Curiosity Rover!",
+                isAnimationPresent:false
+
             });
             for (let i=0;i<25;i++)
             {
@@ -609,13 +725,6 @@ export default class PathFinder extends Component
 }
 
 const newNode= (row,col)=>{
-   /* let inPathNode=null;
-    if(this.state.isSecondPresent===true)
-    {
-        if(this.state.isSecondFinish===true)
-        inPathNode=this.state.grid[fr][fc];
-        else inPathNode=this.state.grid[fr2][fc2];
-    }*/
     return {
         val: 50*row+col,
         row,
